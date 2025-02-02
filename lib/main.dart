@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Promo App',
+      title: 'Navbar Scroll App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -20,286 +20,142 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  // Fungsi untuk melakukan scroll ke bagian tertentu
+  void _scrollToSection(double position) {
+    _scrollController.animateTo(
+      position,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Promo App'),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        actions: [
+          _navItem("Home", 0),
+          _navItem("Aplikasi yang Kami Buat", 1000), // Scroll ke bagian Aplikasi
+          _navItem("Tentang Kami", 2000), // Scroll ke bagian Tentang Kami
+        ],
+      ),
       body: SingleChildScrollView(
+        controller: _scrollController, // Menggunakan ScrollController
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header dengan gambar dan teks
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurple, Colors.purpleAccent],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  const Text(
-                    'Selamat Datang di Aplikasi Kami',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Temukan solusi terbaik untuk kebutuhan Anda dengan aplikasi kami yang inovatif dan mudah digunakan.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
-                  Image.asset(
-                    'assets/icon/school-bell.png', // Ganti dengan path gambar Anda
-                    height: 200,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol ditekan
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Mulai Sekarang',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                ],
-              ),
+            _section(
+              height: 1000,
+              color: Colors.deepPurple.shade100,
+              // title: "Home",
+              // content: "Selamat datang di Promo App!",
+              isHome: true
             ),
-
-            // Fitur-fitur aplikasi
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  const Text(
-                    'Fitur Unggulan',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: FeatureCard(
-                          icon: Icons.speed,
-                          title: 'Cepat dan Efisien',
-                          description:
-                              'Aplikasi kami dirancang untuk memberikan pengalaman pengguna yang cepat dan efisien.',
-                        ),
-                      ),
-                      Expanded(
-                        child: FeatureCard(
-                          icon: Icons.security,
-                          title: 'Aman dan Terpercaya',
-                          description:
-                              'Keamanan data Anda adalah prioritas kami. Aplikasi kami menggunakan teknologi enkripsi terbaru.',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: FeatureCard(
-                          icon: Icons.phone_android,
-                          title: 'Multi-Platform',
-                          description:
-                              'Aplikasi kami dapat digunakan di berbagai platform, termasuk Android dan iOS.',
-                        ),
-                      ),
-                      Expanded(
-                        child: FeatureCard(
-                          icon: Icons.support_agent,
-                          title: 'Dukungan 24/7',
-                          description:
-                              'Tim dukungan kami siap membantu Anda kapan saja, 24 jam sehari, 7 hari seminggu.',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            _section(
+              height: 1000,
+              color: Colors.purple.shade200,
+              // title: "Aplikasi yang Kami Buat",
+              // content: "Ini adalah aplikasi yang telah kami kembangkan.",
             ),
-
-            // Testimoni
-            Container(
-              padding: const EdgeInsets.all(20),
-              color: Colors.grey[200],
-              child: Column(
-                children: [
-                  const Text(
-                    'Apa Kata Mereka?',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const TestimonialCard(
-                    name: 'John Doe',
-                    comment:
-                        'Aplikasi ini sangat membantu saya dalam menyelesaikan pekerjaan sehari-hari. Sangat mudah digunakan!',
-                  ),
-                  const SizedBox(height: 20),
-                  const TestimonialCard(
-                    name: 'Jane Smith',
-                    comment:
-                        'Saya sangat puas dengan layanan yang diberikan. Tim dukungan sangat responsif dan membantu.',
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol ditekan
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Coba Sekarang',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
+            _section(
+              height: 1000,
+              color: Colors.pink.shade200,
+              // title: "Tentang Kami",
+              // content: "Kami adalah tim yang berdedikasi untuk membuat aplikasi berkualitas.",
             ),
           ],
         ),
       ),
     );
   }
+
+  // Fungsi untuk membuat item navbar
+  Widget _navItem(String title, double position) {
+    return TextButton(
+      onPressed: () => _scrollToSection(position),
+      child: Text(title, style: const TextStyle(color: Colors.white, fontSize: 16)),
+    );
+  }
+
+  Widget _section({
+  required double height,
+  required Color color,
+  // required String title,
+  // required String content,
+  bool isHome = false, // Tambahkan parameter untuk halaman Home
+}) {
+  return Container(
+    height: height,
+    width: double.infinity,
+    color: color,
+    padding: const EdgeInsets.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Text(
+        //   title,
+        //   style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        // ),
+        // const SizedBox(height: 10),
+        // Text(
+        //   content,
+        //   style: const TextStyle(fontSize: 18),
+        // ),
+        if (isHome) ...[
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _homeBox("Fitur 1", Icons.star, Colors.deepPurple),
+              _homeBox("Fitur 2", Icons.settings, Colors.purple),
+              _homeBox("Fitur 3", Icons.info, Colors.pink),
+            ],
+          ),
+        ],
+      ],
+    ),
+  );
 }
 
-class FeatureCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String description;
-
-  const FeatureCard({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
+// Widget untuk kotak fitur di Home
+Widget _homeBox(String title, IconData icon, Color color) {
+  return Expanded(
+    child: Container(
+      height: 150,
       margin: const EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Icon(
-              icon,
-              size: 50,
-              color: Colors.deepPurple,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(color: Colors.black26, blurRadius: 5, offset: Offset(2, 2))
+        ],
       ),
-    );
-  }
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: Colors.white, size: 40),
+          const SizedBox(height: 10),
+          Text(
+            title,
+            style: const TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ],
+      ),
+    ),
+  );
 }
-
-class TestimonialCard extends StatelessWidget {
-  final String name;
-  final String comment;
-
-  const TestimonialCard({
-    super.key,
-    required this.name,
-    required this.comment,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const Icon(
-              Icons.account_circle,
-              size: 50,
-              color: Colors.deepPurple,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              name,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              comment,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
