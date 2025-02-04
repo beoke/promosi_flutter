@@ -124,7 +124,7 @@ class _LandingPageState extends State<LandingPage> {
                 _homeBox("Fitur 1", Icons.star, Colors.deepPurple),
                 _homeBox("Fitur 2", Icons.settings, Colors.purple),
                 _homeBox("Fitur 3", Icons.info, Colors.pink),
-                _homeBox("Fitur 3", Icons.info, Colors.pink),
+                _homeBox("Fitur 4", Icons.lightbulb, Colors.orange),
               ],
             ),
           ],
