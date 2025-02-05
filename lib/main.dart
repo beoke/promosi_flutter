@@ -61,21 +61,9 @@ class _LandingPageState extends State<LandingPage> {
             _section(
                 height: 1000,
                 color: Colors.deepPurple.shade100,
-                // title: "Home",
-                // content: "Selamat datang di Promo App!",
+                title: "Home",
+                content: "Selamat datang di Promo App!",
                 isHome: true),
-            _section(
-              height: 1000,
-              color: Colors.purple.shade200,
-              // title: "Aplikasi yang Kami Buat",
-              // content: "Ini adalah aplikasi yang telah kami kembangkan.",
-            ),
-            _section(
-              height: 1000,
-              color: Colors.pink.shade200,
-              // title: "Tentang Kami",
-              // content: "Kami adalah tim yang berdedikasi untuk membuat aplikasi berkualitas.",
-            ),
           ],
         ),
       ),
@@ -94,8 +82,8 @@ class _LandingPageState extends State<LandingPage> {
   Widget _section({
     required double height,
     required Color color,
-    // required String title,
-    // required String content,
+    required String title,
+    required String content,
     bool isHome = false, // Tambahkan parameter untuk halaman Home
   }) {
     return Container(
@@ -107,15 +95,15 @@ class _LandingPageState extends State<LandingPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Text(
-          //   title,
-          //   style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          // ),
-          // const SizedBox(height: 10),
-          // Text(
-          //   content,
-          //   style: const TextStyle(fontSize: 18),
-          // ),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            content,
+            style: const TextStyle(fontSize: 18),
+          ),
           if (isHome) ...[
             const SizedBox(height: 20),
             Row(
